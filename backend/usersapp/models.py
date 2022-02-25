@@ -7,3 +7,6 @@ class User(AbstractUser):
         verbose_name='email address',
         unique=True,
     )
+
+    def __str__(self):
+        return self.username

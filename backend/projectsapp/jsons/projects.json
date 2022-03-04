@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Django",
+        "link_repository": "https://github.com/e-murij/django_site_store"
+    },
+    {
+       "name": "Flask",
+        "link_repository": "https://github.com/e-murij/DRF"
+    },
+    {
+        "name": "Python",
+        "link_repository": "https://github.com/e-murij/alien_invasion"
+    }
+]

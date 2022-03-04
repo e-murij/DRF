@@ -1,0 +1,17 @@
+[
+    {
+        "project": 1,
+        "text": "Красивый сайт на Django",
+        "user": 2
+    },
+    {
+        "project": 2,
+        "text": "Освоить Flask",
+        "user": 3
+    },
+    {
+        "project": 3,
+        "text": "Выучить Python",
+        "user": 4
+    }
+]

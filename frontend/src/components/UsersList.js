@@ -1,5 +1,3 @@
-import './UsersList.css'
-
 const UserItem = ({user}) => {
     return (
         <tr>

@@ -3,21 +3,18 @@
         "username": "Kate",
         "first_name": "Ekaterina",
         "last_name": "Ivanova",
-        "email": "Ivanova@mail.ru",
-        "password": "Stepan21?01"
+        "email": "Ivanova@mail.ru"
     },
     {
         "username": "Ivan",
         "first_name": "Ivan",
         "last_name": "Petrov",
-        "email": "Petrov@mail.ru",
-        "password": "Stepan21?01"
+        "email": "Petrov@mail.ru"
     },
     {
         "username": "Anton",
         "first_name": "Anton",
         "last_name": "Sergeev",
-        "email": "Sergeev@mail.ru",
-        "password": "Stepan21?01"
+        "email": "Sergeev@mail.ru"
     }
 ]

@@ -5,6 +5,7 @@ import UsersList from './components/UsersList.js'
 import NoteToDoList from './components/NoteToDoList.js'
 import ProjectsList from './components/ProjectsList.js'
 import ProjectInfo from './components/ProjectInfo.js'
+import LoginForm from './components/LoginForm.js'
 import Menu from './components/Menu.js'
 import Info from './components/Info.js'
 import Footer from './components/Footer.js'
@@ -27,13 +28,15 @@ class App extends React.Component {
        this.state = {
            'users': [],
            'projects': [],
-           'noteToDo': []
+           'noteToDo': [],
+           'token': ''
        }
    }
 
-   componentDidMount() {
+   getData() {
+        let headers = this.getHeader()
         axios
-            .get('http://127.0.0.1:8000/api/users/')
+            .get('http://127.0.0.1:8000/api/users/', {headers})
             .then(response => {
                 const users = response.data
 
@@ -41,9 +44,14 @@ class App extends React.Component {
                     'users': users
                 })
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    'users': []
+                })
+            })
         axios
-            .get('http://127.0.0.1:8000/api/projects/')
+            .get('http://127.0.0.1:8000/api/projects/', {headers})
             .then(response => {
                 const projects = response.data.results
 
@@ -51,9 +59,14 @@ class App extends React.Component {
                     'projects': projects
                 })
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    'projects': []
+                })
+            })
         axios
-            .get('http://127.0.0.1:8000/api/notes/')
+            .get('http://127.0.0.1:8000/api/notes/', {headers})
             .then(response => {
                 const noteToDo = response.data.results
 
@@ -61,8 +74,56 @@ class App extends React.Component {
                     'noteToDo': noteToDo
                 })
             })
+             .catch(error => {
+                console.log(error)
+                this.setState({
+                    'noteToDo': []
+                })
+            })
+    }
+
+
+    componentDidMount() {
+        let token = localStorage.getItem('token')
+        this.setState({
+            'token': token
+        }, this.getData)
+    }
+
+    isAuth() {
+        return !!this.state.token
+    }
+
+    getHeader() {
+        if (this.isAuth()) {
+            return {
+                'Authorization': 'Token ' + this.state.token
+            }
+        }
+        return {}
+    }
+
+    getToken(login, password) {
+        console.log(login, password)
+        axios
+            .post('http://127.0.0.1:8000/api-auth-token/', {'username': login, 'password': password})
+            .then(response => {
+                const token = response.data.token
+                localStorage.setItem('token', token)
+                this.setState({
+                    'token': token,
+                }, this.getData)
+            })
             .catch(error => console.log(error))
     }
+
+    logout() {
+        localStorage.setItem('token', '')
+        this.setState({
+            'token': '',
+        }, this.getData)
+    }
+
 
    render () {
        return (
@@ -75,8 +136,12 @@ class App extends React.Component {
                         <Route exact path='/projects' element = {<ProjectsList projects={this.state.projects} />} />
                         <Route exact path='/notes' element = {<NoteToDoList noteToDoes={this.state.noteToDo} />} />
                         <Route path='/project/:id' element = {<ProjectInfo projects={this.state.projects} />} />
+                        <Route exact path='/login' element = {<LoginForm getToken={(login, password) => this.getToken(login, password)} />} />
                         <Route path="*" element = {<NotFound />} />
                     </Routes>
+                    <li>
+                        { this.isAuth() ? <button class="btn btn-primary btn-block create-account" onClick={()=>this.logout()}> Выход </button> : <Link to='/login'> Вход </Link> }
+                    </li>
                   <Footer />
                 </BrowserRouter>
             </div>

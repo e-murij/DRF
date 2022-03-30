@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+li {
+  list-style-type: none;
+}
+
+.raz {
+  text-align: right;
+}
+.raz div {
+  display: inline-block; /* inline-block занимает ширину содержимого, max-width её ограничивает */
+  max-width: 8em;
+  min-height: 2em;
+  border: 1px solid orange;
+  text-align: start; /* убрать наследование text-align */
+  background: #fff5d7;
+}

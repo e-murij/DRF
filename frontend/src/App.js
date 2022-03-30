@@ -110,6 +110,7 @@ class App extends React.Component {
             .then(response => {
                 const token = response.data.token
                 localStorage.setItem('token', token)
+                localStorage.setItem('username', login)
                 this.setState({
                     'token': token,
                 }, this.getData)
@@ -124,11 +125,21 @@ class App extends React.Component {
         }, this.getData)
     }
 
+    getUserName(){
+        let firstName = this.state.users.find(el => el['username'] === localStorage.getItem('username'))
+        if (firstName) {
+         return firstName['first_name']
+        }
+
+    }
 
    render () {
        return (
             <div>
                 <BrowserRouter>
+                     <li>
+                        { this.isAuth() ? <div class='raz'> Привет, { this.getUserName() } </div> : <div> Привет </div> }
+                    </li>
                     <Menu />
                     <Routes>
                         <Route exact path='/' element = {<Info />} />
@@ -142,6 +153,7 @@ class App extends React.Component {
                     <li>
                         { this.isAuth() ? <button class="btn btn-primary btn-block create-account" onClick={()=>this.logout()}> Выход </button> : <Link to='/login'> Вход </Link> }
                     </li>
+
                   <Footer />
                 </BrowserRouter>
             </div>

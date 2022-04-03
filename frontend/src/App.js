@@ -97,10 +97,13 @@ class App extends React.Component {
     getHeader() {
         if (this.isAuth()) {
             return {
-                'Authorization': 'Token ' + this.state.token
+                'Authorization': 'Token ' + this.state.token,
+                'Accept': 'application/json; version=2.0'
             }
         }
-        return {}
+        return {
+            'Accept': 'application/json; version=2.0'
+        }
     }
 
     getToken(login, password) {

@@ -13,7 +13,7 @@ services:
       POSTGRES_DB: TODO
 
   backend:
-    build: ./TODO
+    build: ./backend
     privileged: true
     restart: always
     ports:

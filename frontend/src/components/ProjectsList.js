@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom'
-const ProjectItem = ({project}) => {
+const ProjectItem = ({project, deleteProject}) => {
     const users_list = project.users.map((user) => `${user} `)
     return (
         <tr>
@@ -12,13 +12,15 @@ const ProjectItem = ({project}) => {
             <td>
                 {users_list}
             </td>
+            <td><button onClick={()=>deleteProject(project.id)}>Delete</button></td>
         </tr>
     )
 }
 
 
-const ProjectsList = ({projects}) => {
+const ProjectsList = ({projects, deleteProject}) => {
     return (
+    <div>
         <table>
             <th>
                 Name
@@ -29,8 +31,12 @@ const ProjectsList = ({projects}) => {
             <th>
                 Users
             </th>
-            {projects.map((project) => <ProjectItem project={project} />)}
+            <th>
+            </th>
+            {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject}/>)}
         </table>
+        <Link to='/projects/create'>New project</Link>
+    </div>
     )
 }
 

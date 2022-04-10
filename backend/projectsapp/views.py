@@ -1,9 +1,9 @@
 import django_filters
-from django_filters import CharFilter, DateTimeFilter
+from django_filters import CharFilter, DateTimeFilter, BooleanFilter
 from django_filters.rest_framework import FilterSet
 from rest_framework.viewsets import ModelViewSet
 from .models import Project, NoteToDo
-from .serializers import ProjectSerializer, NoteToDoSerializer
+from .serializers import ProjectSerializer, NoteToDoSerializer, ProjectCreateSerializer, NoteToDoCreateSerializer
 from rest_framework.pagination import LimitOffsetPagination
 
 
@@ -19,10 +19,11 @@ class NoteToDoFilter(FilterSet):
     start_time = DateTimeFilter(field_name="updated_at", lookup_expr='gte')
     end_time = DateTimeFilter(field_name="updated_at", lookup_expr='lte')
     project = CharFilter(field_name="project__name", lookup_expr='contains')
+    is_active = BooleanFilter(field_name='is_active', lookup_expr='exact')
 
     class Meta:
         model = NoteToDo
-        fields = ['updated_at', 'project']
+        fields = ['updated_at', 'project', 'is_active']
 
 
 class ProjectFilter(FilterSet):
@@ -43,9 +44,13 @@ class ProjectModelViewSet(ModelViewSet):
     """
 
     queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
     pagination_class = ProjectLimitOffsetPagination
     filterset_class = ProjectFilter
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return ProjectCreateSerializer
+        return ProjectSerializer
 
     # def get_queryset(self):
     #     queryset = Project.objects.all()
@@ -67,13 +72,17 @@ class NoteToDoModelViewSet(ModelViewSet):
 
     """
     queryset = NoteToDo.objects.all()
-    serializer_class = NoteToDoSerializer
     pagination_class = NoteToDoLimitOffsetPagination
     filterset_class = NoteToDoFilter
 
     def perform_destroy(self, instance):
         instance.is_active = False
         instance.save()
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return NoteToDoCreateSerializer
+        return NoteToDoSerializer
 
     # def get_queryset(self):
     #     queryset = NoteToDo.objects.all()

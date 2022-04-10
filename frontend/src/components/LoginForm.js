@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
                                 <input class="form-control item" type="text" name="login" maxlength="15" minlength="4" pattern="^[a-zA-Z0-9_.-]*$" id="username" placeholder="Логин" required onChange={(event) => this.handleChange(event)} value={this.state.login}/>
                             </div>
                             <div class="form-group">
-                                <input class="form-control item" type="password" name="password" minlength="6" id="password" placeholder="Пароль" required onChange={(event) => this.handleChange(event)} value={this.state.password}/>
+                                <input class="form-control item" type="password" name="password" id="password" placeholder="Пароль" required onChange={(event) => this.handleChange(event)} value={this.state.password}/>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-primary btn-block create-account" type="submit" value="Login">Вход в аккаунт</button>

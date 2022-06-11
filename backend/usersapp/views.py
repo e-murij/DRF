@@ -1,5 +1,6 @@
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.permissions import IsAuthenticated
 from .models import User
 from .serializers import UserModelSerializer, UserModelSerializerV2
 

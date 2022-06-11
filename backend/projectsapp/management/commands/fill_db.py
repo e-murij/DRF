@@ -14,7 +14,7 @@ def load_from_json(file_name):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        User.objects.all().delete()
+        # User.objects.all().delete()
         User.objects.create_superuser(username='admin', password='admin', email='admin@mail.ru')
         users = load_from_json('users')
         for item in users:
@@ -24,9 +24,9 @@ class Command(BaseCommand):
         for item in projects:
             obj = Project(**item)
             obj.save()
-            obj.users.add(3, 4)
+            obj.users.add(1, 2)
             obj.save()
-        NoteToDo.objects.all().delete()
+        #NoteToDo.objects.all().delete()
         notesToDo = load_from_json('notes')
         for item in notesToDo:
             user = User.objects.get(pk=item['user'])

@@ -1,0 +1,12 @@
+.menu {
+	width: 100%;
+	display: table;
+	padding: 8px 15px;
+}
+.menu ul {
+	display: table-row;
+}
+.menu li {
+	display: table-cell;
+	background: light-gray;
+}

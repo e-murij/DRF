@@ -1,5 +1,3 @@
-import './UsersList.css'
-
 const UserItem = ({user}) => {
     return (
         <tr>
@@ -14,6 +12,12 @@ const UserItem = ({user}) => {
             </td>
             <td>
                 {user.email}
+            </td>
+            <td>
+                {user.is_staff.toString()}
+            </td>
+             <td>
+                {user.is_superuser.toString()}
             </td>
         </tr>
     )
@@ -34,6 +38,12 @@ const UsersList = ({users}) => {
             </th>
             <th>
                 Email
+            </th>
+            <th>
+                Is staff
+            </th>
+            <th>
+                Is superuser
             </th>
             {users.map((user) => <UserItem user={user} />)}
         </table>
